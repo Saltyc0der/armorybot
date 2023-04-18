@@ -63,7 +63,7 @@ class ArmoryBot(discord.Client):
                                    "type" : item[9]
                                    }
         
-        print(len(self.items))
+
         print(f'Logged on as {self.user}!')
 
     async def on_guild_join(self, guild):
@@ -111,7 +111,6 @@ class ArmoryBot(discord.Client):
 class Database:
 
     def __init__(self) -> None:
-        print(pathlib.Path(__file__))
         self.con = sqlite3.connect(str(pathlib.Path(__file__).parent) + ".\discordbot.db")
         self.cur = self.con.cursor()
 
