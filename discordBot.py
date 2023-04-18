@@ -95,7 +95,7 @@ class ArmoryBot(discord.Client):
         
         
 
-        if splitSt[0] != await self.getPrefix((message)) :
+        if splitSt[0] != await self.getPrefix(message) :
             return
         if message.author.bot == True:
             return
