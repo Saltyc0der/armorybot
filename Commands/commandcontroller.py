@@ -124,13 +124,12 @@ async def handleSummary(bot,splitmsg, msg): #We should handle DM's!
 
 async def getWarmaneData(character, realm):
     gear = "https://armory.warmane.com/character/{character}/{realm}/profile".format(character = character, realm = realm)
-    print("gear link:", gear)
     response = requests.get(gear, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36'})
     return response
 
 async def getTalentData(character, realm):
     gear = "https://armory.warmane.com/character/{character}/{realm}/talents".format(character = character, realm = realm)
-    print("talents link:", gear)
+
     response = requests.get(gear, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36'})
     return response
 
@@ -444,7 +443,6 @@ async def createGlyphFields(rply, major, minor):
 def getGearData(data):
   soup = BeautifulSoup(data.content, 'html.parser')
   itemlinks = soup.select(".icon-quality")
-  print(itemlinks)
   items = []
 
   for i,item in enumerate(itemlinks):
