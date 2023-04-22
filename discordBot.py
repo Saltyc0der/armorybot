@@ -76,8 +76,20 @@ async def on_command_error(ctx, error):
         await ctx.reply(embed=discord.Embed(title="Error!", description="You do not have permission to use this command! \n Only server owners can use this command!", color=discord.Colour.red()))
     if isinstance(error, discord.ext.commands.errors.NoPrivateMessage): # checking which type of error it is
         await ctx.reply(embed=discord.Embed(title="Error!", description="You can't use this command in private messages!", color=discord.Colour.red()))
-    else:
-        await ctx.reply(error)
+
+
+@bot.event
+async def on_guild_join(guild):
+    bot.db.query("INSERT INTO guild (guild_snowflake, realm, prefix) VALUES ({snowflake}, '{realm}', '{prefix}')"
+                    .format(snowflake = guild.id, realm = "Icecrown", prefix = ".bot "))
+    bot.db.commit()
+    bot.prefixes[guild.id] = ".bot "
+
+@bot.event
+async def on_guild_remove(guild):
+    bot.db.query("DELETE FROM guild WHERE guild_snowflake = {snowflake}"
+                    .format(snowflake = guild.id))
+
 bot.run(botSettings["token"])
 
 
