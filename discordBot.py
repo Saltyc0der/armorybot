@@ -46,10 +46,9 @@ class ArmoryBot(commands.Bot):
 class Database:
 
     def __init__(self) -> None:
-        print("RESOLVE: ", str(pathlib.Path(__file__).parent.resolve()) + "\discordbot.db")
-        print("NO RESOLVE: "str(pathlib.Path(__file__).parent.) + "\discordbot.db")
-        #self.con = sqlite3.connect(str(pathlib.Path(__file__).parent.resolve()) + "\discordbot.db")
-        #elf.cur = self.con.cursor()
+
+        self.con = sqlite3.connect(str(pathlib.Path(__file__).parent.resolve()) + "/discordbot.db")
+        self.cur = self.con.cursor()
 
     def query(self, q):
         return self.cur.execute(q)
