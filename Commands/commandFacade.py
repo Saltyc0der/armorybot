@@ -17,7 +17,10 @@ def setBotRef(bot): #set bot ref
     rBot = bot
 
 def getPrefix(ctx):
-        return rBot.prefixes[ctx.guild.id]
+        if ctx.guild == None:
+            return ".bot "
+        else:
+            return rBot.prefixes[ctx.guild.id]
           #how do i get bot here.
 
 def getDefaultRealm(ctx):
