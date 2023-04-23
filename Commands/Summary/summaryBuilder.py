@@ -99,8 +99,8 @@ class Character:
         self.Achivpts = self.getAchivpts(profile)
         self.HK = self.getHK(profile)
         self.spec = self.getSpec(profile)
-        self.majorGlyphs = self.getMinorGlyphs(talent)
-        self.minorGlyphs = self.getMajorGlyphs(talent)
+        self.majorGlyphs = self.getMajorGlyphs(talent)
+        self.minorGlyphs = self.getMinorGlyphs(talent)
         self.gems = self.getGems(items)
         self.enchants = self.getEnchants(items)
 
