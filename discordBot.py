@@ -78,15 +78,18 @@ async def on_command_error(ctx, error):
         await ctx.reply(embed=discord.Embed(title="Error!", description="You do not have permission to use this command! \n Only server owners can use this command!", color=discord.Colour.red()))
     if isinstance(error, discord.ext.commands.errors.NoPrivateMessage): # checking which type of error it is
         await ctx.reply(embed=discord.Embed(title="Error!", description="You can't use this command in private messages!", color=discord.Colour.red()))
+    if isinstance(error, discord.ext.commands.errors.CommandNotFound): # checking which type of error it is
+        await ctx.reply(embed=discord.Embed(title="Error!", description="Command not found! Make sure you typed in the correct command!", color=discord.Colour.red()))
+
+    channel = bot.get_channel(1099702530667204699)
+    message = ctx.message.content
+    author = ctx.author.name
+    if ctx.guild == None: #Error happened in priv msg
+        msg = "\nDM AUTHOR: " + author + "\nCONTENT:" + message + "\nERROR: " + error
     else:
-        channel = bot.get_channel(1099702530667204699)
-        message = ctx.message.content
-        author = ctx.author.name
-        if ctx.guild == None: #Error happened in priv msg
-            msg = "\nDM AUTHOR: " + author + "\nCONTENT:" + message + "\nERROR: " + error
-        else:
-             msg =  "\nGUILD: " + ctx.guild.name + " BY "+ author + "\nCONTENT:" + message + "\nERROR: " + str(error)
-        await channel.send(msg)
+            msg =  "\nGUILD: " + ctx.guild.name + " BY "+ author + "\nCONTENT:" + message + "\nERROR: " + str(error)
+    await channel.send(msg)
+
 @bot.event
 async def on_guild_join(guild):
     bot.db.query("INSERT INTO guild (guild_snowflake, realm, prefix) VALUES ({snowflake}, '{realm}', '{prefix}')"
