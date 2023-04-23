@@ -286,7 +286,10 @@ class Character:
             except ValueError:
                 pass
         if class_ != "Hunter":
-            missingEnchants.remove("Ranged")
+            try:
+                missingEnchants.remove("Ranged")
+            except ValueError:
+                pass
         if class_ in ["Priest","Mage","Warlock", "Druid"]:
             try:
                 missingEnchants.remove("Off-hand")
