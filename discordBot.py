@@ -70,6 +70,9 @@ bot = ArmoryBot(command_prefix=getBotPrefix, intents=intents)
 
 @bot.event
 async def on_ready():
+    
+    await bot.get_channel(1099702530667204699).send("Hi! I restarted.")
+    await bot.get_channel(1099702530667204699).send("I'm currently part of " + str(len(bot.prefixes)) + " guilds.")
     await bot.load_extension("Commands.commandFacade")
         
 @bot.event
@@ -92,6 +95,7 @@ async def on_command_error(ctx, error):
 
 @bot.event
 async def on_guild_join(guild):
+    await bot.get_channel(1099702530667204699).send("Hi! I just joined: " + guild.name)
     bot.db.query("INSERT INTO guild (guild_snowflake, realm, prefix) VALUES ({snowflake}, '{realm}', '{prefix}')"
                     .format(snowflake = guild.id, realm = "Icecrown", prefix = ".bot "))
     bot.db.commit()
@@ -101,6 +105,7 @@ async def on_guild_join(guild):
 async def on_guild_remove(guild):
     bot.db.query("DELETE FROM guild WHERE guild_snowflake = {snowflake}"
                     .format(snowflake = guild.id))
+    await bot.get_channel(1099702530667204699).send("Hi! I just left: " + guild.name)
 
 bot.run(botSettings["token"])
 
