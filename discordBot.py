@@ -94,7 +94,7 @@ async def on_command_error(ctx, error):
     await channel.send(msg)
 
 @bot.event
-async def on_guild_join(guild)
+async def on_guild_join(guild):
     await bot.get_channel(1099702530667204699).send("Hi! I just joined: " + guild.name)
     bot.db.query("INSERT INTO guild (guild_snowflake, realm, prefix) VALUES ({snowflake}, '{realm}', '{prefix}')"
                     .format(snowflake = guild.id, realm = "Icecrown", prefix = ".bot "))
