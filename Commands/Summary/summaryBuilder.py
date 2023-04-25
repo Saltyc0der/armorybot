@@ -164,9 +164,14 @@ class Character:
             for item in name:
                 a = BeautifulSoup(str(item), 'html.parser')
                 skillName = a.get_text()
-                skillName = skillName.replace("\n", "")
-
-                result = result + skillName + "\n"
+                splitStr = skillName.split()
+                
+                for i, str_ in enumerate(splitStr):
+                    if i == 1:
+                        result = result + " " + str_
+                    else:
+                        result = result + str_
+                result = result + "\n"
 
             return result
         except:
@@ -213,13 +218,18 @@ class Character:
             skills = BeautifulSoup(str(element[0]), 'html.parser')
             name = skills.select(".text")
             result = ""
+            skill = ""
             for i, item in enumerate(name):
                 a = BeautifulSoup(str(item), 'html.parser')
                 skillName = a.get_text()
-                skillName = skillName.replace("\n", "")
-
-                result = result + "[" + str(i+1) + "]" + skillName + "\n"
-
+                splitStr = skillName.split()
+                for x, str_ in enumerate(splitStr):
+                    if x == 1:
+                        skill = skill + " " + str_
+                    else:
+                        skill = skill + str_
+                result = result + "[" + str(i+1) + "] " + skill + "\n"
+                skill = ""
             return result
         except:
             return "None"
