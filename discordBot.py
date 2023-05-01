@@ -39,7 +39,7 @@ class ArmoryBot(commands.Bot):
                                    "name" : item[5],
                                    "quality" : item[6],
                                    "requires" : item[7],
-                                   "sublcass" : item[8],
+                                   "subclass" : item[8],
                                    "type" : item[9]
                                    }
 

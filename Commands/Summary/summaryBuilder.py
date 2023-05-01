@@ -120,15 +120,16 @@ class Character:
         for i, item in enumerate(items):
             try:
                 dbItem = self.bot.items[item[itemNames[i]]['item']]
-                if dbItem['class'] == 2 and (dbItem['subclass'] == 1 or dbItem['subclass'] == 5 or dbItem['subclass'] == 8 ):
+                subclass = int(dbItem['subclass'])
+                if int(dbItem['class']) == 2 and (subclass == 1 or subclass == 5 or subclass == 8 ):
                     weapons.append(dbItem)
                 else:
                     gs = gs + int(dbItem['gs'])
             except KeyError:
                 pass
-
+        
         if len(weapons) == 2:
-            gs = gs + math.floor(( int(weapons[0]['gs'])+ int(weapons[0]['gs']))/2 )
+            gs = gs + math.floor(( int(weapons[0]['gs'])+ int(weapons[1]['gs']))/2 )
         elif len(weapons) == 1:
             gs = gs + weapons[0]['gs']
         return gs
