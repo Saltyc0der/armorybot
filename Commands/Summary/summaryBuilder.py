@@ -131,7 +131,7 @@ class Character:
         if len(weapons) == 2:
             gs = gs + math.floor(( int(weapons[0]['gs'])+ int(weapons[1]['gs']))/2 )
         elif len(weapons) == 1:
-            gs = gs + weapons[0]['gs']
+            gs = gs + int(weapons[0]['gs'])
         return gs
 
     def getLevelRace(self,data):
