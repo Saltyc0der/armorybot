@@ -112,7 +112,10 @@ class Character:
                 pass
         weaponSum = 0
         weaponSum += sum(int(weapon['gs']) for weapon in weapons)
-        gs += weaponSum / 2
+        if len(weapons) == 2:
+            gs += weaponSum / 2
+        else:
+            gs += weaponSum
         return str(int(gs)) #XD
 
     @check_required_data("profile")
@@ -303,12 +306,12 @@ class Character:
         list_of_achivs = {
             15041 : ["#ach4636", "#ach4532"],
             15042 : ["#ach4584", "#ach4597"],
-            15001 : ["#ach3917", "#ach3918"],
+            15001 : ["#ach3918", "#ach3917"],
             15002 : ["#ach3812", "#ach3916"],
             14961 : [],
             14962 : [],
-            14922 : ["#ach4817", "#ach4818"],
-            14923 : ["#ach4815", "#ach4816"],
+            14922 : ["#ach4818", "#ach4817"],
+            14923 : ["#ach4816", "#ach4815"],
         }
         result = ""
         data = self.requestAchivCategory(list_of_instances[instance])
