@@ -1,6 +1,6 @@
 import discord
 
-class SetDefaultRealmBuilder:
+class SetDefaultRealm:
         
         def __init__(self, realm,snowflake, bot) -> None:
             self.realm = realm

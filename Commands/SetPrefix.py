@@ -1,6 +1,6 @@
 import discord
 
-class SetPrefixBuilder:
+class SetPrefix:
         
         def __init__(self, newPrefix,snowflake, bot) -> None:
             self.prefix = newPrefix

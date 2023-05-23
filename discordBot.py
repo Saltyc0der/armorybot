@@ -73,7 +73,7 @@ async def on_ready():
     
     await bot.get_channel(1099702530667204699).send("Hi! I restarted.")
     await bot.get_channel(1099702530667204699).send("I'm currently part of " + str(len(bot.prefixes)) + " guilds.")
-    await bot.load_extension("Commands.commandFacade")
+    await bot.load_extension("Commands.Commands")
         
 @bot.event
 async def on_command_error(ctx, error):
@@ -90,7 +90,7 @@ async def on_command_error(ctx, error):
     if ctx.guild == None: #Error happened in priv msg
         msg = "\nDM AUTHOR: " + author + "\nCONTENT:" + message + "\nERROR: " + error
     else:
-            msg =  "\nGUILD: " + ctx.guild.name + " BY "+ author + "\nCONTENT:" + message + "\nERROR: " + str(error)
+           msg =  "\nGUILD: " + ctx.guild.name + " BY "+ author + "\nCONTENT:" + message + "\nERROR: " + str(error)
     await channel.send(msg)
 
 @bot.event
@@ -101,11 +101,25 @@ async def on_guild_join(guild):
     bot.db.commit()
     bot.prefixes[guild.id] = ".bot "
 
+    channel = guild.channels[0]
+    emb = discord.Embed(title="Hello! I just joined the server!", 
+                    description="I am an armory bot made by fr no cap smh#0219", 
+                    color=discord.Colour.green())
+    emb.add_field(name="What can this bot do?", value="This bot can look up general information of characters on all Warmane (maybe more in the future?) realms!\n Type .bot help to see the list of commands \n Bot also responds to DMs", inline=False)
+    emb.add_field(name="Hi, I got a bug report or feature request", value='Message "fr no cap smh#0219" on discord ', inline=False)
+    emb.add_field(name="Your bot is slow and it sucks", value="Well blame the warmane developers, their API sucks so I need to scrape their website for data which is slow and it takes more than 1 request", inline=False)
+    await channel.send(embed=emb)
+
+
 @bot.event
 async def on_guild_remove(guild):
     bot.db.query("DELETE FROM guild WHERE guild_snowflake = {snowflake}"
                     .format(snowflake = guild.id))
+    bot.db.commit()
+
     await bot.get_channel(1099702530667204699).send("Hi! I just left: " + guild.name)
+
+
 
 bot.run(botSettings["token"])
 
