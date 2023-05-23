@@ -110,9 +110,10 @@ class Character:
                     gs += int(dbItem['gs'])
             except KeyError:
                 pass
-
-        gs += sum(int(weapon['gs']) for weapon in weapons)
-        return str(gs)
+        weaponSum = 0
+        weaponSum += sum(int(weapon['gs']) for weapon in weapons)
+        gs += weaponSum / 2
+        return str(int(gs)) #XD
 
     @check_required_data("profile")
     def getGuild(self):
