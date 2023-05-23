@@ -201,8 +201,9 @@ class Character:
         for i, item in enumerate(items):
             if i not in bannedItems:
                 try:
-                    if 'ench' not in item[itemNames[i]]:
-                        missingEnchants.append(itemNames[i])
+                    if 'item' in item[itemNames[i]]:
+                        if 'ench' not in item[itemNames[i]]:
+                            missingEnchants.append(itemNames[i])
                 except KeyError:
                     pass
 
@@ -214,6 +215,9 @@ class Character:
 
         if class_ in ["Priest", "Mage", "Warlock", "Druid"]:
             missingEnchants = [item for item in missingEnchants if item != "Off-hand"]
+
+        if class_ == "Death Knight" and False:
+            pass
 
         if missingEnchants:
             return "Missing enchants from: " + ", ".join(missingEnchants)
@@ -234,15 +238,16 @@ class Character:
         for i, item in enumerate(items):
             if i not in bannedItems:
                 try:
-                    gemAmountFromDB = int(self.bot.items[item[itemNames[i]]['item']]['gems'])
-                    if gemAmountFromDB != 0:
-                        if i == 9:
-                            gemAmountFromDB += 1
-                        if "Blacksmithing" in cleanprofessions and (i == 7 or i == 8):
-                            gemAmountFromDB += 1
-                        itemGemAmount = len(item[itemNames[i]]['gems'])
-                        if gemAmountFromDB != itemGemAmount:
-                            missingGems.append(itemNames[i])
+                    if 'item' in item[itemNames[i]]:
+                        gemAmountFromDB = int(self.bot.items[item[itemNames[i]]['item']]['gems'])
+                        if gemAmountFromDB != 0:
+                            if i == 9:
+                                gemAmountFromDB += 1
+                            if "Blacksmithing" in cleanprofessions and (i == 7 or i == 8):
+                                gemAmountFromDB += 1
+                            itemGemAmount = len(item[itemNames[i]]['gems'])
+                            if gemAmountFromDB != itemGemAmount:
+                                missingGems.append(itemNames[i])
                 except KeyError:
                     missingGems.append(itemNames[i])
 
