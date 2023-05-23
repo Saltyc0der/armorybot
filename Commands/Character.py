@@ -321,3 +321,36 @@ class Character:
                 else:
                     result = result + "❌ " + str(element.select_one(".title").get_text()) + "\n"
         return result
+
+    def getICCAchiv(self, instance):
+        list_of_instances = {
+            "icc10" :15041,
+            "icc25" :15042,
+        }
+        list_of_achivs = {
+            15041 : ["#ach4531", "#ach4628", "#ach4528", "#ach4629",
+                    "#ach4529", "#ach4630", "#ach4527", "#ach4631",
+                    "#ach4530", "#ach4583"],
+                    
+            15042 : ["#ach4604", "#ach4632", "#ach4605", "#ach4633",
+                    "#ach4606", "#ach4634", "#ach4607", "#ach4635",
+                    "#ach4597", "#ach4584"],
+        }
+        result = ""
+        data = self.requestAchivCategory(list_of_instances[instance])
+        soup = BeautifulSoup(data, 'html.parser')
+        for i, class_name in enumerate(list_of_achivs[list_of_instances[instance]]):
+            elements = soup.select(class_name)
+            for element in elements:
+                if element.select_one(".date"):
+                    clean_text = re.sub(r'\s*\(\d+ player\)', '', str(element.select_one(".title").get_text()))
+                    result = result + "✅ " + clean_text + "\n"
+                    if i % 2:
+                        result = result + "\n"
+                else:
+                    clean_text = re.sub(r'\s*\(\d+ player\)', '', str(element.select_one(".title").get_text()))
+                    result = result + "❌ " + clean_text + "\n"
+                    if i % 2:
+                        result = result + "\n"
+        
+        return result

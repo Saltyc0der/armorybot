@@ -6,6 +6,7 @@ from Commands.SetPrefix import SetPrefix
 from Commands.SetDefaultRealm import SetDefaultRealm
 from Commands.Help import Help
 from Commands.Achiv import Achiv
+from Commands.IcecrownAchiv import IcecrownAchiv
 
 rBot = None 
 
@@ -59,6 +60,17 @@ async def achiv(ctx, character=None, realm=None):
     await msg.edit(embed=await Achiv(Character(character, realm,"", rBot)).Result())
 
 
+@commands.command()
+async def icc(ctx, character=None, realm=None):
+    emb = discord.Embed(title="Command is running, be patient!", 
+                    description="How's your day been?", 
+                    color=discord.Colour.yellow())
+    msg = await ctx.reply(embed=emb)
+    if realm == None:
+        realm = getDefaultRealm(ctx)
+    await msg.edit(embed=await IcecrownAchiv(Character(character, realm,"", rBot)).Result())
+
+
 @commands.command(aliases=['info'])
 async def help(ctx):
     await ctx.reply(embed=await Help(getPrefix(ctx),getDefaultRealm(ctx)).Result())
@@ -74,6 +86,7 @@ async def setdefaultrealm(ctx, realm=None):
 async def setup(bot):
     bot.remove_command("help")
     bot.add_command(help)
+    bot.add_command(icc)
     bot.add_command(setprefix)
     bot.add_command(summary)
     bot.add_command(achiv)
