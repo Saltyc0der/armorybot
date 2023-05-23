@@ -317,9 +317,11 @@ class Character:
             elements = soup.select(class_name)
             for element in elements:
                 if element.select_one(".date"):
-                    result = result + "✅ " + str(element.select_one(".title").get_text()) + "\n"
+                    clean_text = re.sub(r'\s*\(\d+ player\)', '', str(element.select_one(".title").get_text()))
+                    result = result + "✅ " + clean_text + "\n"
                 else:
-                    result = result + "❌ " + str(element.select_one(".title").get_text()) + "\n"
+                    clean_text = re.sub(r'\s*\(\d+ player\)', '', str(element.select_one(".title").get_text()))
+                    result = result + "❌ " + clean_text + "\n"
         return result
 
     def getICCAchiv(self, instance):
