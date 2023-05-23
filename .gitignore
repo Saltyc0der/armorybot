@@ -1,5 +1,6 @@
 __pycache__/
 vars.py
 discordbot.db
+/discordbot.db
 discordbot.db-journal
 
