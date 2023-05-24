@@ -101,15 +101,6 @@ async def on_guild_join(guild):
     bot.db.commit()
     bot.prefixes[guild.id] = ".bot "
 
-    channel = guild.channels[0]
-    emb = discord.Embed(title="Hello! I just joined the server!", 
-                    description="I am an armory bot made by fr no cap smh#0219", 
-                    color=discord.Colour.green())
-    emb.add_field(name="What can this bot do?", value="This bot can look up general information of characters on all Warmane (maybe more in the future?) realms!\n Type .bot help to see the list of commands \n Bot also responds to DMs", inline=False)
-    emb.add_field(name="Hi, I got a bug report or feature request", value='Message "fr no cap smh#0219" on discord ', inline=False)
-    emb.add_field(name="Your bot is slow and it sucks", value="Well blame the warmane developers, their API sucks so I need to scrape their website for data which is slow and it takes more than 1 request", inline=False)
-    await channel.send(embed=emb)
-
 
 @bot.event
 async def on_guild_remove(guild):
