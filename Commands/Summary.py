@@ -44,11 +44,15 @@ class Summary:
         emb.add_field(name="[2] Minor Glyphs", value=minorGlyphs[1], inline=True)
         emb.add_field(name='\u200b', value='\u200b', inline=True)
 
+        emb.add_field(name="Link to Armory", value="https://armory.warmane.com/character/{character}/{realm}/talents".format(character=self.character.name, realm = self.character.realm), inline=True)
+         
+        emb.set_footer(text="Lidar, when rol marrow?")
+        
         if self.character.error:
             emb = discord.Embed(title="Error - Character not found!", 
                                 description="Character name not found!", 
                                 color=discord.Colour.red())
 
 
-        emb.set_footer(text="Lidar, when rol marrow?")
+
         return emb
