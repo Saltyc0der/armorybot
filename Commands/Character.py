@@ -110,12 +110,12 @@ class Character:
                     gs += int(dbItem['gs'])
             except KeyError:
                 pass
-        weaponSum = 0
-        weaponSum += sum(int(weapon['gs']) for weapon in weapons)
+        #weaponSum = 0
+        #weaponSum += sum(int(weapon['gs']) for weapon in weapons)
         if len(weapons) == 2:
-            gs += weaponSum / 2
-        else:
-            gs += weaponSum
+            gs += math.floor(( int(weapons[0]['gs'])+ int(weapons[1]['gs']))/2 )
+        elif len(weapons) == 1:
+            gs += int(weapons[0]['gs'])
         return str(int(gs)) #XD
 
     @check_required_data("profile")

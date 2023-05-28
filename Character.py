@@ -21,6 +21,7 @@ class Character:
         self.apiGuild = None
         self.error = False
         self.items = None
+        self.achivCache = []
 
 
     def check_required_data(data_type):

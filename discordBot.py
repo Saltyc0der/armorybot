@@ -42,6 +42,9 @@ class ArmoryBot(commands.Bot):
                                    "subclass" : item[8],
                                    "type" : item[9]
                                    }
+        
+        def addPrefix(self, newprefix, guildID):
+            self.prefixes[guildID] = newprefix
 
         
 class Database:
@@ -99,7 +102,7 @@ async def on_guild_join(guild):
     bot.db.query("INSERT INTO guild (guild_snowflake, realm, prefix) VALUES ({snowflake}, '{realm}', '{prefix}')"
                     .format(snowflake = guild.id, realm = "Icecrown", prefix = ".bot "))
     bot.db.commit()
-    bot.prefixes[guild.id] = ".bot "
+    bot.addPrefix(".bot ", guild.id)
 
 
 @bot.event

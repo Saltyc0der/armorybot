@@ -36,8 +36,8 @@ def getDefaultRealm(ctx):
 @commands.guild_only()
 @is_guild_owner()
 @commands.command()
-async def setprefix(ctx, prefix=None):
-    await ctx.reply(embed=await SetPrefix(prefix,ctx.guild.id, rBot).Result())
+async def setprefix(ctx, prefix=None, space=None):
+    await ctx.reply(embed=await SetPrefix(prefix,space, ctx.guild.id, rBot).Result())
 
 @commands.command()
 async def summary(ctx, character=None, realm=None):
