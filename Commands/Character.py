@@ -40,12 +40,19 @@ class Character:
                 character=self.name, realm=self.realm)
             self.profileHTML = requests.get(URL, headers={
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36'}).content
+            soup = BeautifulSoup(self.profileHTML, "html.parser")
+            if bool(soup.find(text="Page not found")):
+                self.error = True
+
 
         if _type == "talents" and self.talentHTML is None:
             URL = "https://armory.warmane.com/character/{character}/{realm}/talents".format(
                 character=self.name, realm=self.realm)
             self.talentHTML = requests.get(URL, headers={
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36'}).content
+            soup = BeautifulSoup(self.talentHTML, "html.parser")
+            if bool(soup.find(text="Page not found")):
+                self.error = True
 
         if _type == "apiProfile" and self.apiProfile is None:
             URL = "https://armory.warmane.com/api/character/{character}/{realm}/summary".format(
