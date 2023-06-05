@@ -69,7 +69,7 @@ class Database:
 intents = discord.Intents.default()
 intents.message_content = True
 
-bot = ArmoryBot(command_prefix=getBotPrefix, intents=intents)
+bot = ArmoryBot(case_insensitive=True, command_prefix=getBotPrefix, intents=intents)
 
 @bot.event
 async def on_ready():
