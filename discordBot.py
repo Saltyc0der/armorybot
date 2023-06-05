@@ -3,7 +3,7 @@ from discord.ext import commands
 import sqlite3
 import pathlib
 import vars
-import time
+
 
 botSettings = vars.getSettings()
 

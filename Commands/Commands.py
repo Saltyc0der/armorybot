@@ -8,6 +8,11 @@ from Commands.Help import Help
 from Commands.Achiv import Achiv
 from Commands.IcecrownAchiv import IcecrownAchiv
 
+from Commands.NaxxAchiv import NaxxAchiv
+from Commands.RSAchiv import RSAchiv
+from Commands.TocAchiv import TocAchiv
+from Commands.UlduarAchiv import UldAchiv
+
 rBot = None 
 
 def is_guild_owner():
@@ -39,7 +44,7 @@ def getDefaultRealm(ctx):
 async def setprefix(ctx, prefix=None, space=None):
     await ctx.reply(embed=await SetPrefix(prefix,space, ctx.guild.id, rBot).Result())
 
-@commands.command()
+@commands.command(aliases=['inspect', 'stalk'])
 async def summary(ctx, character=None, realm=None):
         emb = discord.Embed(title="Command is running, be patient!", 
                         description="Beep Boop stuff is happening", 
@@ -70,6 +75,45 @@ async def icc(ctx, character=None, realm=None):
         realm = getDefaultRealm(ctx)
     await msg.edit(embed=await IcecrownAchiv(Character(character, realm,"", rBot)).Result())
 
+@commands.command(aliases=['ruby', 'rubysanctum'])
+async def rs(ctx, character=None, realm=None):
+    emb = discord.Embed(title="Command is running, be patient!", 
+                    description="How's your day been?", 
+                    color=discord.Colour.yellow())
+    msg = await ctx.reply(embed=emb)
+    if realm == None:
+        realm = getDefaultRealm(ctx)
+    await msg.edit(embed=await RSAchiv(Character(character, realm,"", rBot)).Result())
+
+@commands.command(aliases=['uld'])
+async def ulduar(ctx, character=None, realm=None):
+    emb = discord.Embed(title="Command is running, be patient!", 
+                    description="How's your day been?", 
+                    color=discord.Colour.yellow())
+    msg = await ctx.reply(embed=emb)
+    if realm == None:
+        realm = getDefaultRealm(ctx)
+    await msg.edit(embed=await UldAchiv(Character(character, realm,"", rBot)).Result())
+
+@commands.command(aliases=['naxxaramas', 'nax', "naxxramas"])
+async def naxx(ctx, character=None, realm=None):
+    emb = discord.Embed(title="Command is running, be patient!", 
+                    description="How's your day been?", 
+                    color=discord.Colour.yellow())
+    msg = await ctx.reply(embed=emb)
+    if realm == None:
+        realm = getDefaultRealm(ctx)
+    await msg.edit(embed=await NaxxAchiv(Character(character, realm,"", rBot)).Result())
+
+@commands.command(aliases=['togc', 'trial'])
+async def toc(ctx, character=None, realm=None):
+    emb = discord.Embed(title="Command is running, be patient!", 
+                    description="How's your day been?", 
+                    color=discord.Colour.yellow())
+    msg = await ctx.reply(embed=emb)
+    if realm == None:
+        realm = getDefaultRealm(ctx)
+    await msg.edit(embed=await TocAchiv(Character(character, realm,"", rBot)).Result())
 
 @commands.command(aliases=['info'])
 async def help(ctx):
@@ -87,6 +131,10 @@ async def setup(bot):
     bot.remove_command("help")
     bot.add_command(help)
     bot.add_command(icc)
+    bot.add_command(rs)
+    bot.add_command(naxx)
+    bot.add_command(ulduar)
+    bot.add_command(toc)
     bot.add_command(setprefix)
     bot.add_command(summary)
     bot.add_command(achiv)

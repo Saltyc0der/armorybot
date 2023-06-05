@@ -371,3 +371,156 @@ class Character:
                         result = result + "\n"
         
         return result
+    
+    def getRSAchiv(self, instance):
+        list_of_instances = {
+            "naxx10" : 14922,
+            "naxx25" : 14923
+        }
+        list_of_achivs = {
+            14922 : ["#ach4817", "#ach4818"],
+                    
+            14923 : ["#ach4815", "#ach4816"],
+        }
+        result = ""
+        data = self.requestAchivCategory(list_of_instances[instance])
+        soup = BeautifulSoup(data, 'html.parser')
+        for i, class_name in enumerate(list_of_achivs[list_of_instances[instance]]):
+            elements = soup.select(class_name)
+            for element in elements:
+                if element.select_one(".date"):
+                    clean_text = re.sub(r'\s*\(\d+ player\)', '', str(element.select_one(".title").get_text()))
+                    result = result + "✅ " + clean_text + "\n"
+                    if i % 2:
+                        result = result + "\n"
+                else:
+                    clean_text = re.sub(r'\s*\(\d+ player\)', '', str(element.select_one(".title").get_text()))
+                    result = result + "❌ " + clean_text + "\n"
+                    if i % 2:
+                        result = result + "\n"
+        
+        return result
+    
+    def getUlduarAchiv(self, instance):
+        list_of_instances = {
+            "uld10" : 14961,
+            "uld25" : 14962,
+        }
+        list_of_achivs = {
+            14961 : ["#ach2886", "#ach2888", "#ach2890", "#ach2892"],
+                    
+            14962 : ["#ach2887", "#ach2889", "#ach2889", "#ach2893"],
+        }
+        list_of_achivs_hm = { #Council, Hodir, Thorim, Freya, Mimimron, 2-1 Lights, Algalon, Herald
+            14961 : ["#ach2941","#ach3182", "#ach3176", "#ach3179", "#ach3180",
+                      "#ach3158" , "#ach3159", "#ach3158", "#ach3316"],
+                    
+            14962 : ["#ach2944", "#ach3184", "#ach3183", "#ach3187", "#ach3189",
+                     "#ach3163", "#ach3164", "#ach3037"],
+        }
+        result = ""
+        data = self.requestAchivCategory(list_of_instances[instance])
+        soup = BeautifulSoup(data, 'html.parser')
+        for i, class_name in enumerate(list_of_achivs[list_of_instances[instance]]):
+            elements = soup.select(class_name)
+            for element in elements:
+                if element.select_one(".date"):
+                    clean_text = re.sub(r'\s*\(\d+ player\)', '', str(element.select_one(".title").get_text()))
+                    result = result + "✅ " + clean_text + "\n"
+                    if i % 2:
+                        result = result + "\n"
+                else:
+                    clean_text = re.sub(r'\s*\(\d+ player\)', '', str(element.select_one(".title").get_text()))
+                    result = result + "❌ " + clean_text + "\n"
+                    if i % 2:
+                        result = result + "\n"
+        result = result + "Hard Modes: \n"
+        for i, class_name in enumerate(list_of_achivs_hm[list_of_instances[instance]]):
+            elements = soup.select(class_name)
+            for element in elements:
+                if element.select_one(".date"):
+                    clean_text = re.sub(r'\s*\(\d+ player\)', '', str(element.select_one(".title").get_text()))
+                    result = result + "✅ " + clean_text + "\n"
+                    if i % 2:
+                        result = result + "\n"
+                else:
+                    clean_text = re.sub(r'\s*\(\d+ player\)', '', str(element.select_one(".title").get_text()))
+                    result = result + "❌ " + clean_text + "\n"
+                    if i % 2:
+                        result = result + "\n"
+        
+        return result
+    
+    def getNaxxAchiv(self, instance):
+        list_of_instances = {
+            "naxx10" : 14922,
+            "naxx25" : 14923
+        }
+        list_of_achivs = { #Sarth, 1,2,3 - Spider, Construct, Plague, Mil, KT
+                            #Undying, Malygos
+            14922 : ["#ach1876", "#ach2049", "#ach2050", "#ach2051",
+                    "#ach562", "#ach564", "#ach566", "#ach566",
+                    "#ach574", "#ach2187", "#ach622"],
+                    
+            14923 : ["#ach625", "#ach2052", "#ach2053", "#ach2054",
+                    "#ach563", "#ach563", "#ach567", "#ach569",
+                    "#ach575", "#ach575", "#ach623"],
+        }
+        result = ""
+        data = self.requestAchivCategory(list_of_instances[instance])
+        soup = BeautifulSoup(data, 'html.parser')
+        for i, class_name in enumerate(list_of_achivs[list_of_instances[instance]]):
+            elements = soup.select(class_name)
+            for element in elements:
+                if element.select_one(".date"):
+                    clean_text = re.sub(r'\s*\(\d+ player\)', '', str(element.select_one(".title").get_text()))
+                    result = result + "✅ " + clean_text + "\n"
+                    if i % 2:
+                        result = result + "\n"
+                else:
+                    clean_text = re.sub(r'\s*\(\d+ player\)', '', str(element.select_one(".title").get_text()))
+                    result = result + "❌ " + clean_text + "\n"
+                    if i % 2:
+                        result = result + "\n"
+        
+        return result
+    
+    def getTocAchiv(self, instance):
+        list_of_instances = {
+            "toc10" : 15001,
+            "toc25" : 15002,
+        }
+        list_of_achivs = {
+            15001 : ["#ach3917", "#ach3918", "#ach3808", "#ach3809","#ach3810", "#ach4080"],
+                    
+            15002 : ["#ach3916", "#ach3812", "#ach3817", "#ach3818","#ach3819"],
+        }
+
+        result = ""
+        data = self.requestAchivCategory(list_of_instances[instance])
+        soup = BeautifulSoup(data, 'html.parser')
+        for i, class_name in enumerate(list_of_achivs[list_of_instances[instance]]):
+            elements = soup.select(class_name)
+            for element in elements:
+                if element.select_one(".date"):
+                    clean_text = re.sub(r'\s*\(\d+ player\)', '', str(element.select_one(".title").get_text()))
+                    result = result + "✅ " + clean_text + "\n"
+                    if i % 2:
+                        result = result + "\n"
+                else:
+                    clean_text = re.sub(r'\s*\(\d+ player\)', '', str(element.select_one(".title").get_text()))
+                    result = result + "❌ " + clean_text + "\n"
+                    if i % 2:
+                        result = result + "\n"
+
+        if instance == "toc25":
+        #We check FoS for immortality achi
+            data1 = self.requestAchivCategory(81)
+            soup = BeautifulSoup(data1, 'html.parser')
+            elements = soup.select("#ach4079")
+            if len(elements) == 1:
+                result = result + "✅ " + "A Tribute to Immortality" + "\n"
+            else:
+                result = result + "❌ " + "A Tribute to Immortality" + "\n"
+
+        return result
