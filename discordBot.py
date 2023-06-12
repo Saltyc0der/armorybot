@@ -84,7 +84,8 @@ async def on_guild_join(guild):
     bot.cur.execute("INSERT INTO guild (guild_snowflake, realm, prefix) VALUES ({snowflake}, '{realm}', '{prefix}')"
                     .format(snowflake = guild.id, realm = "Icecrown", prefix = ".bot "))
     bot.db.commit()
-    bot.addPrefix(".bot ", guild.id)
+    bot.prefixes[guild.id] = ".bot "
+    bot.defaultRealm[guild.id] = "Icecrown"
 
 
 @bot.event
