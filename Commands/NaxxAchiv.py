@@ -17,8 +17,8 @@ class NaxxAchiv:
         emb = discord.Embed(title="Character achievments for {char}-{realm}".format(char = self.character.name.capitalize(), realm = self.character.realm)
                     , description="", color=discord.Colour.dark_green())
 
-        emb.add_field(name="Naxxaramas +\n Obsidian Sanctum +\n Eye of Eternity 10", value=self.character.getNaxxAchiv("naxx10"), inline=True)
-        emb.add_field(name="Naxxaramas +\n Obsidian Sanctum +\n Eye of Eternity 25", value=self.character.getNaxxAchiv("naxx25"), inline=True)
+        emb.add_field(name="Obsidian Sanctum\nNaxxaramas\nEye of Eternity 10", value=self.character.getNaxxAchiv("naxx10"), inline=True)
+        emb.add_field(name="Obsidian Sanctum\nNaxxaramas\nEye of Eternity 25", value=self.character.getNaxxAchiv("naxx25"), inline=True)
         emb.add_field(name='\u200b', value='\u200b', inline=False)
 
 
