@@ -33,6 +33,13 @@ class Character:
             return wrapper
         return decorator
 
+    def check_error(func):
+        def wrapper(self, *args, **kwargs):
+            if self.error == False:
+                return func(self,*args, **kwargs)
+            else:
+                pass
+        return wrapper
 
     def __check_required_data(self, _type):
         if _type == "profile" and self.profileHTML is None:
@@ -102,6 +109,7 @@ class Character:
 
         return True
 
+    @check_error
     @check_required_data("items")
     def getGS(self):
         gs = 0
@@ -125,6 +133,7 @@ class Character:
             gs += int(weapons[0]['gs'])
         return str(int(gs)) #XD
 
+    @check_error
     @check_required_data("profile")
     def getGuild(self):
         try:
@@ -135,6 +144,7 @@ class Character:
         except:
             return "None"
 
+    @check_error
     @check_required_data("profile")
     def getProfessions(self):
         try:
@@ -152,6 +162,7 @@ class Character:
         except:
             return "None"
 
+    @check_error
     @check_required_data("profile")
     def getAchivPts(self):
         try:
@@ -163,7 +174,8 @@ class Character:
                 return "None"
         except:
             return "None"
-
+        
+    @check_error
     @check_required_data("profile")
     def getHK(self, data):
         try:
@@ -176,6 +188,7 @@ class Character:
         except:
             return ["None", "None"]
 
+    @check_error
     @check_required_data("profile")
     def getSpec(self):
         try:
@@ -194,6 +207,7 @@ class Character:
         except:
             return "None"
     
+    @check_error
     @check_required_data("items")
     def getEnchants(self):
         items = self.items 
@@ -231,6 +245,7 @@ class Character:
         else:
             return "All items are enchanted!"
     
+    @check_error
     @check_required_data("items")
     def getGems(self):
         items = self.items 
@@ -266,6 +281,7 @@ class Character:
         else:
             return "All items are gemmed!"
 
+    @check_error
     @check_required_data("talents")
     def getGlyphs(self, glyphType):
         soup = BeautifulSoup(self.talentHTML, 'html.parser')
@@ -280,6 +296,7 @@ class Character:
 
         return result
 
+    @check_error
     @check_required_data("profile")
     def getLevelRace(self):
         try:
@@ -299,11 +316,18 @@ class Character:
         res = requests.post(URL, headers={
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36'},
                 data=form_data).content
+        content = None
+        try:
+            content = json.loads(res)
+        except json.JSONDecodeError:
+            self.error = True
         
-
-        content = json.loads(res)
-        return content['content']
-
+        if content != None and self.error == False:
+            return content['content'] 
+        if content == None or self.error == True:
+            return None
+        
+    @check_error
     def getAchiv(self, instance):
         list_of_instances = {
             "icc10" :15041,
@@ -327,6 +351,8 @@ class Character:
         }
         result = ""
         data = self.requestAchivCategory(list_of_instances[instance])
+        if data == None:
+            return
         soup = BeautifulSoup(data, 'html.parser')
         for class_name in list_of_achivs[list_of_instances[instance]]:
             elements = soup.select(class_name)
@@ -339,6 +365,7 @@ class Character:
                     result = result + "❌ " + clean_text + "\n"
         return result
 
+    @check_error
     def getICCAchiv(self, instance):
         list_of_instances = {
             "icc10" :15041,
@@ -355,6 +382,8 @@ class Character:
         }
         result = ""
         data = self.requestAchivCategory(list_of_instances[instance])
+        if data == None:
+            return
         soup = BeautifulSoup(data, 'html.parser')
         for i, class_name in enumerate(list_of_achivs[list_of_instances[instance]]):
             elements = soup.select(class_name)
@@ -372,6 +401,7 @@ class Character:
         
         return result
     
+    @check_error
     def getRSAchiv(self, instance):
         list_of_instances = {
             "naxx10" : 14922,
@@ -384,6 +414,8 @@ class Character:
         }
         result = ""
         data = self.requestAchivCategory(list_of_instances[instance])
+        if data == None:
+            return
         soup = BeautifulSoup(data, 'html.parser')
         for i, class_name in enumerate(list_of_achivs[list_of_instances[instance]]):
             elements = soup.select(class_name)
@@ -401,6 +433,7 @@ class Character:
         
         return result
     
+    @check_error
     def getUlduarAchiv(self, instance):
         list_of_instances = {
             "uld10" : 14961,
@@ -420,6 +453,8 @@ class Character:
         }
         result = ""
         data = self.requestAchivCategory(list_of_instances[instance])
+        if data == None:
+            return
         soup = BeautifulSoup(data, 'html.parser')
         for i, class_name in enumerate(list_of_achivs[list_of_instances[instance]]):
             elements = soup.select(class_name)
@@ -427,13 +462,9 @@ class Character:
                 if element.select_one(".date"):
                     clean_text = re.sub(r'\s*\(\d+ player\)', '', str(element.select_one(".title").get_text()))
                     result = result + "✅ " + clean_text + "\n"
-                    if i % 2:
-                        result = result + "\n"
                 else:
                     clean_text = re.sub(r'\s*\(\d+ player\)', '', str(element.select_one(".title").get_text()))
                     result = result + "❌ " + clean_text + "\n"
-                    if i % 2:
-                        result = result + "\n"
         result = result + "Hard Modes: \n"
         for i, class_name in enumerate(list_of_achivs_hm[list_of_instances[instance]]):
             elements = soup.select(class_name)
@@ -451,6 +482,7 @@ class Character:
         
         return result
     
+    @check_error
     def getNaxxAchiv(self, instance):
         list_of_instances = {
             "naxx10" : 14922,
@@ -468,6 +500,8 @@ class Character:
         }
         result = ""
         data = self.requestAchivCategory(list_of_instances[instance])
+        if data == None:
+            return
         soup = BeautifulSoup(data, 'html.parser')
         for i, class_name in enumerate(list_of_achivs[list_of_instances[instance]]):
             elements = soup.select(class_name)
@@ -485,6 +519,7 @@ class Character:
         
         return result
     
+    @check_error
     def getTocAchiv(self, instance):
         list_of_instances = {
             "toc10" : 15001,
@@ -498,6 +533,8 @@ class Character:
 
         result = ""
         data = self.requestAchivCategory(list_of_instances[instance])
+        if data == None:
+            return
         soup = BeautifulSoup(data, 'html.parser')
         for i, class_name in enumerate(list_of_achivs[list_of_instances[instance]]):
             elements = soup.select(class_name)

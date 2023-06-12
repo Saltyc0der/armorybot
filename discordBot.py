@@ -91,9 +91,9 @@ async def on_command_error(ctx, error):
     message = ctx.message.content
     author = ctx.author.name
     if ctx.guild == None: #Error happened in priv msg
-        msg = "\nDM AUTHOR: " + author + "\nCONTENT:" + message + "\nERROR: " + error
+        msg = "CONTENT:" + message + "\nERROR: " + str(error)
     else:
-           msg =  "\nGUILD: " + ctx.guild.name + " BY "+ author + "\nCONTENT:" + message + "\nERROR: " + str(error)
+        msg = "CONTENT:" + message + "\nERROR: " + str(error)
     await channel.send(msg)
 
 @bot.event
