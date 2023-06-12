@@ -14,13 +14,17 @@ class SetPrefix:
                                      description="Please enter new prefix you would like to use! \nUsage of the command: setprefix <new prefix>",
                                        color=discord.Colour.red())
             else:
-                if self.space.lower() in ['true', '1', 't', 'y', 'yes', 'yeah', 'nospace']:
-                    self.prefix = self.prefix
+                if self.space != None:
+                    if self.space.lower() in ['true', '1', 't', 'y', 'yes', 'yeah', 'nospace']:
+                        self.prefix = self.prefix
+                    else:
+                        self.prefix = self.prefix + " "
                 else:
                     self.prefix = self.prefix + " "
-
-                self.bot.db.querycommit("UPDATE guild SET prefix = '{newPrefix}' WHERE guild_snowflake = {guild};"
-                            .format(newPrefix = self.prefix, guild = self.snowflake))
+                
+                self.bot.cur.execute("UPDATE guild SET prefix = ? WHERE guild_snowflake = {guild};"
+                            .format(guild = self.snowflake), [self.prefix])
+                self.bot.db.commit()
                 self.bot.addPrefix(self.prefix, self.snowflake)
                 return discord.Embed(title="New prefix successfully set!",
                                      description="You have set your bot's prefix to {newPrefix}".format(newPrefix = self.prefix),

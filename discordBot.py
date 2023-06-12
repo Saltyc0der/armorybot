@@ -19,17 +19,18 @@ class ArmoryBot(commands.Bot):
         super().__init__(intents=intents, **options)
         
         self.items = {}
-        self.db = Database()
+        self.db = sqlite3.connect(str(pathlib.Path(__file__).parent.resolve()) + "/discordbot.db")
+        self.cur = self.db.cursor()
         self.prefixes = {}
         self.defaultRealm = {}
         #Don't need to load roles etc. into memory, because those will be rarely hit.
 
-        response = self.db.query("SELECT guild_snowflake, prefix, realm FROM guild")
+        response = self.cur.execute("SELECT guild_snowflake, prefix, realm FROM guild")
         for prefix in response:
             self.prefixes[prefix[0]] = prefix[1]
             self.defaultRealm[prefix[0]] = prefix[2]
 
-        items = self.db.query("SELECT GearScore, ItemLevel, class, gems, ItemID, name, quality, requires, subclass, type FROM items")
+        items = self.cur.execute("SELECT GearScore, ItemLevel, class, gems, ItemID, name, quality, requires, subclass, type FROM items")
         for item in items:
             self.items[item[4]] = {
                                     "gs" : item[0],
@@ -43,27 +44,8 @@ class ArmoryBot(commands.Bot):
                                    "type" : item[9]
                                    }
         
-        def addPrefix(self, newprefix, guildID):
-            self.prefixes[guildID] = newprefix
-
-        
-class Database:
-
-    def __init__(self) -> None:
-
-        self.con = sqlite3.connect(str(pathlib.Path(__file__).parent.resolve()) + "/discordbot.db")
-        self.cur = self.con.cursor()
-
-    def query(self, q):
-        return self.cur.execute(q)
-
-    def commit(self):
-        return self.con.commit()
-    
-    def querycommit(self, q):
-        self.query(q)
-        self.commit()
-
+    def addPrefix(self, newprefix, guildID):
+        self.prefixes[guildID] = newprefix
 
 
 intents = discord.Intents.default()
@@ -99,7 +81,7 @@ async def on_command_error(ctx, error):
 @bot.event
 async def on_guild_join(guild):
     await bot.get_channel(1099702530667204699).send("Hi! I just joined: " + guild.name)
-    bot.db.query("INSERT INTO guild (guild_snowflake, realm, prefix) VALUES ({snowflake}, '{realm}', '{prefix}')"
+    bot.cur.execute("INSERT INTO guild (guild_snowflake, realm, prefix) VALUES ({snowflake}, '{realm}', '{prefix}')"
                     .format(snowflake = guild.id, realm = "Icecrown", prefix = ".bot "))
     bot.db.commit()
     bot.addPrefix(".bot ", guild.id)
@@ -107,7 +89,7 @@ async def on_guild_join(guild):
 
 @bot.event
 async def on_guild_remove(guild):
-    bot.db.query("DELETE FROM guild WHERE guild_snowflake = {snowflake}"
+    bot.cur.execute("DELETE FROM guild WHERE guild_snowflake = {snowflake}"
                     .format(snowflake = guild.id))
     bot.db.commit()
 
