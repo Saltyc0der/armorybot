@@ -34,15 +34,15 @@ class ArmoryBot(commands.Bot):
         for item in items:
             self.items[item[4]] = {
                                     "gs" : item[0],
-                                   "ilvl" : item[1],
-                                   "class" : item[2],
-                                   "gems" : item[3],
-                                   "name" : item[5],
-                                   "quality" : item[6],
-                                   "requires" : item[7],
-                                   "subclass" : item[8],
-                                   "type" : item[9]
-                                   }
+                                    "ilvl" : item[1],
+                                    "class" : item[2],
+                                    "gems" : item[3],
+                                    "name" : item[5],
+                                    "quality" : item[6],
+                                    "requires" : item[7],
+                                    "subclass" : item[8],
+                                    "type" : item[9]
+                                    }
         
     def addPrefix(self, newprefix, guildID):
         self.prefixes[guildID] = newprefix
