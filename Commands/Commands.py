@@ -17,7 +17,7 @@ rBot = None
 
 def is_guild_owner():
     def predicate(ctx):
-        return ctx.guild is not None and ctx.guild.owner_id == ctx.author.id
+        return (ctx.guild is not None and ctx.guild.owner_id == ctx.author.id) or (ctx.guild is not None and ctx.author.server_premission.administrator)
     return commands.check(predicate)
 
 def setBotRef(bot): #set bot ref
