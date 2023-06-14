@@ -13,7 +13,7 @@ class Character:
         # Input
         self.bot = botContext
         self.name = name
-        self.realm = realm
+        self.realm = realm.lower().capitalize()
 
         self.profileHTML = None
         self.talentHTML = None
