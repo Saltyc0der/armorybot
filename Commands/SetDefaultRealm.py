@@ -17,7 +17,7 @@ class SetDefaultRealm:
                 self.bot.cur.execute("UPDATE guild SET realm = ? WHERE guild_snowflake = {guild};"
                             .format(guild = self.snowflake), [self.realm])
                 self.bot.db.commit()
-                self.bot.prefixes[self.snowflake] = self.realm
+                self.bot.defaultRealm[self.snowflake] = self.realm
                 return discord.Embed(title="Updated default realm successfully!",
                                      description="You have set your bot's default realm to {realm}".format(realm = self.realm),
                                        color=discord.Colour.green())

@@ -11,7 +11,10 @@ def getBotPrefix(bot, message) -> bool:
     if message.guild == None:
         return ".bot "
     else: 
-        return bot.prefixes[message.guild.id]
+        if message.guild.id in bot.prefixes:
+            return bot.prefixes[message.guild.id]
+        else:
+            return ".bot "
 
 class ArmoryBot(commands.Bot):
 
