@@ -86,7 +86,7 @@ async def on_guild_remove(guild):
                     .format(snowflake = guild.id))
     bot.db.commit()
 
-    await bot.get_channel(1099702530667204699).send("Hi! I just left: " + guild.name)
+    print("Hi! I just left: " + guild.name)
 
 
 
