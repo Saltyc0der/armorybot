@@ -56,9 +56,9 @@ bot = ArmoryBot(case_insensitive=True, command_prefix=getBotPrefix, intents=inte
 @bot.event
 async def on_ready():
     
-    await bot.get_channel(1099702530667204699).send("Hi! I restarted.")
-    await bot.get_channel(1099702530667204699).send("I'm currently part of " + str(len(bot.prefixes)) + " guilds.")
-    await bot.load_extension("Commands.Commands")
+    print(1099702530667204699).send("Hi! I restarted.")
+    print("I'm currently part of " + str(len(bot.prefixes)) + " guilds.")
+    print("Commands.Commands")
         
 @bot.event
 async def on_command_error(ctx, error):
