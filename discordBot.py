@@ -58,7 +58,7 @@ async def on_ready():
     
     print("Hi! I restarted.")
     print("I'm currently part of " + str(len(bot.prefixes)) + " guilds.")
-    print("Commands.Commands")
+    await bot.load_extension("Commands.Commands")
         
 @bot.event
 async def on_command_error(ctx, error):
