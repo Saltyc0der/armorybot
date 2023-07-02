@@ -56,7 +56,7 @@ bot = ArmoryBot(case_insensitive=True, command_prefix=getBotPrefix, intents=inte
 @bot.event
 async def on_ready():
     
-    print(1099702530667204699).send("Hi! I restarted.")
+    print("Hi! I restarted.")
     print("I'm currently part of " + str(len(bot.prefixes)) + " guilds.")
     print("Commands.Commands")
         
